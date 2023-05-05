@@ -62,6 +62,10 @@ module.exports = async (req, res, next) => {
         email: employee.email,
         role: employee.role,
         salary: employee.salary
+      },
+      by: {
+        empId: req.empId,
+        role: req.empRole
       }
     });
 
