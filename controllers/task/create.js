@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const _ = require("lodash");
 
 const prisma = new PrismaClient();
-const validate = require('../../validation/tasks');
+const { validate } = require('../../validation/tasks');
 
 module.exports = async (req, res, next) => {
   const { error } = validate(req.body);
