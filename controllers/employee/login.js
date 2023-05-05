@@ -1,8 +1,8 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 const { validateLoginEmp } = require('../../validation/employee');
 
 module.exports = async(req, res, next) => {
@@ -26,7 +26,7 @@ module.exports = async(req, res, next) => {
 
     if (!employee) {
       const error = new Error('Employee with this email could not be found.');
-      error.statusCode = 401;
+      error.statusCode = 404;
       throw error;
     }
   
