@@ -6,6 +6,8 @@ const auth = require('../middleware/is-Auth');
 
 router.post('/create/:id', auth, taskController.create);
 
-// router.post('/login', employeeController.login);
+router.get('/tasks', auth, taskController.myTask);
+
+router.put('/status/:id', auth, taskController.changeStatus);
 
 module.exports = router;

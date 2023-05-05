@@ -8,4 +8,6 @@ router.post('/signup', auth, employeeController.signup);
 
 router.post('/login', employeeController.login);
 
+router.put('/addSalary/:id', auth, employeeController.addSalary);
+
 module.exports = router;
