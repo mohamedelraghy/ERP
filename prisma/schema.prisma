@@ -15,6 +15,7 @@ model Employee {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255)
   email     String   @unique
+  password  String
   role      String   @db.VarChar(255)
   salary    Int
   tasks     Task[]
@@ -26,6 +27,6 @@ model Task {
   employeeId  Int
   title       String   @db.VarChar(255)
   description String   @db.VarChar(255)
-  state       String   @db.VarChar(255)
+  status      String   @db.VarChar(255)
   salary      Int  
 }
