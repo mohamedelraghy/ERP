@@ -13,6 +13,12 @@ module.exports = async (req, res, next) => {
     return next(err);
   }
 
+  if (req.empRole === 'developer') {
+    const error = new Error('Not Authorized');
+    error.statusCode = 401;
+    return next(error)
+  }
+
   try {
 
     let employee = await prisma.employee.findUnique({
