@@ -39,7 +39,8 @@ module.exports = async(req, res, next) => {
     
     const token = jwt.sign({
         email: employee.email,
-        empId: employee.id.toString()
+        empId: employee.id.toString(),
+        empRole: employee.role
       },
       process.env.JWT_KEY,
       { expiresIn: '1h' }
