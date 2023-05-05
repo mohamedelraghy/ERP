@@ -10,4 +10,12 @@ const validateTask = task => {
   return schema.validate(task); 
 }
 
-module.exports = validateTask;
+const validateStatus = task => {
+  const schema = Joi.object({
+    status: Joi.string().valid('pending', 'in_progress', 'completed').default('pending').required(),
+  });
+  return schema.validate(task); 
+}
+
+exports.validate = validateTask;
+exports.validateStatus = validateStatus;
