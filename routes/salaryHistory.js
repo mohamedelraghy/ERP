@@ -4,6 +4,6 @@ const router = express.Router();
 const salaryHistoryController = require('../controllers/salaryHistory');
 const auth = require('../middleware/is-Auth');
 
-router.post('/', auth, salaryHistoryController.create);
+router.post('/:id', auth, salaryHistoryController.create);
 
 module.exports = router;
