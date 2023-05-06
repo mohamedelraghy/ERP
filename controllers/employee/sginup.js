@@ -43,11 +43,13 @@ module.exports = async (req, res, next) => {
     let password = req.body.password;
     password = await bcrypt.hash(password, salt);
 
-    if (!req.body.salary) req.body.salary = 0;
+    const profilePic = req.body.profilePic || 'https://profile-pic.me';
+    const date = req.body.birthDate;
 
     const data = {
-      ..._.pick(req.body, ['name', 'email', 'role', 'salary']),
-      password: password
+      ..._.pick(req.body, ['name', 'email', 'role', 'salary', 'profilePic']),
+      password: password,
+      birthDate: new Date(date.year, date.month - 1, date.day)
     }
   
     employee = await prisma.employee.create({
