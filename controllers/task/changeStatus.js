@@ -31,14 +31,20 @@ module.exports = async (req, res, next) => {
       error.status = 400;
       throw error;
     }
+    
+    const data = {
+      status: req.body.status
+    }
+  
+    if (req.body.status === 'completed') {
+      data.finishedAt = new Date();
+    }
 
     const updatedTask = await prisma.task.update({
       where: {
         id: task.id
       },
-      data: {
-        status: req.body.status
-      }
+      data: data
     });
       
     res.status(200).json({ 
