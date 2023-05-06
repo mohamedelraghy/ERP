@@ -21,7 +21,7 @@ model Employee {
   tasks         Task[]
   salaryHistory SalaryHistory[]
   join          DateTime? @default(now())
-  birthDate     DateTime?
+  birthDate     DateTime
   profilePic    String?   @default("https://profile-pic.me") @db.VarChar(255)
 }
 
@@ -33,7 +33,7 @@ model Task {
   description String    @db.VarChar(255)
   status      String    @db.VarChar(255)
   salary      Int       @default(0)
-  deadLine    DateTime?
+  deadLine    DateTime
   finishedAt  DateTime?
 }
 
