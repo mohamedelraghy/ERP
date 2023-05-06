@@ -4,12 +4,7 @@ const prisma = new PrismaClient()
 
 module.exports = async (req, res, next) => {
   
-  if (req.empRole === 'developer') {
-    const error = new Error('Not Authorized');
-    error.statusCode = 401;
-    return next(error)
-  }
-
+  //check role
   try {
 
     let employee = await prisma.employee.findFirst({
