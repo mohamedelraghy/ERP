@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "eca5bd8d-800d-4b98-9af3-e636020c4d19",
+		"name": "ERP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7215796",
+		"_collection_link": "https://www.postman.com/EgrsZJAY8uL3h2P/workspace/public/collection/7215796-eca5bd8d-800d-4b98-9af3-e636020c4d19?action=share&creator=7215796&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test2@test.com\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/employee/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"employee",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register Employee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwiZW1wSWQiOiIyIiwiZW1wUm9sZSI6IjAiLCJpYXQiOjE2ODMzNzM4MzksImV4cCI6MTY4MzM3NzQzOX0.quDK0czza2fo1vRm80-s64KDsi3hYq92bXUIdm-AWoE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ahmed\",\n    \"email\": \"test2@test.com\",\n    \"password\": \"password\",\n    \"confirm_password\": \"password\",\n    \"role\": \"developer\",\n    \"birthDate\": {\n        \"day\": 20,\n        \"month\": 5,\n        \"year\": 1998\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/employee/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"employee",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task by employee ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwiZW1wSWQiOiIyIiwiZW1wUm9sZSI6IjAiLCJpYXQiOjE2ODMzNzM4MzksImV4cCI6MTY4MzM3NzQzOX0.quDK0czza2fo1vRm80-s64KDsi3hYq92bXUIdm-AWoE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Create ERP sys\",\n    \"description\": \"Mini ERP system to mange empoloyees and tasks\",\n    \"status\": \"pending\",\n    \"salary\": 10000,\n    \"deadLine\": {\n        \"day\": 7,\n        \"month\": 5,\n        \"year\": 2023\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/task/create/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"task",
+						"create",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Salary By employee ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bareer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwiZW1wSWQiOiIyIiwiZW1wUm9sZSI6IjAiLCJpYXQiOjE2ODMzNzczODAsImV4cCI6MTY4MzM4MDk4MH0.1BKnLavowAIj3R-ugRGBqcL6z7057lI99xrnkB0Ut5I",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/employee/addSalary/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"employee",
+						"addSalary",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Tasks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwiZW1wSWQiOiIzIiwiZW1wUm9sZSI6ImRldmVsb3BlciIsImlhdCI6MTY4MzM3NjIxNiwiZXhwIjoxNjgzMzc5ODE2fQ.wklZpyRzssQ_DbcJvn95YWS9Ry7dI_1sx_bxbLlFsvI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/task/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"task",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change status by task ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwiZW1wSWQiOiIzIiwiZW1wUm9sZSI6ImRldmVsb3BlciIsImlhdCI6MTY4MzM3NjUzNiwiZXhwIjoxNjgzMzgwMTM2fQ.sF44Rf9Zx2w5acB2bDBGxQ5xbiWaZBQnVo0SjELHii8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"completed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/task/status/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"task",
+						"status",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create salary history by employee ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bareer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHRlc3QuY29tIiwiZW1wSWQiOiIzIiwiZW1wUm9sZSI6ImRldmVsb3BlciIsImlhdCI6MTY4MzM3OTE1MSwiZXhwIjoxNjgzMzgyNzUxfQ.BxyhBuPlkKvO3p_4ckfk_qGneCvjODD1s_JG41nThrc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/api/history/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"history",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
