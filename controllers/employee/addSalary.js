@@ -1,23 +1,18 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
+const checkRole = require('../shared/checkRole');
+const sharedEmp = require('../shared/employee');
+const catchError = require('../shared/catchError');
 
 module.exports = async (req, res, next) => {
   
-  //check role
+  checkRole(req.empRole, next);
+
   try {
-
-    let employee = await prisma.employee.findFirst({
-      where: {
-        id: Number(req.params.id),
-      },
-    });
-
-    if (!employee) {
-      const error = new Error('Employee with this email could not be found.');
-      error.statusCode = 404;
-      throw error;
-    }
+    let employee = await sharedEmp.findEmpById(req.params.id);
+    
+    sharedEmp.employeeNotFound(employee);
     
     const tasks = await prisma.task.findMany({
       where: {
@@ -62,9 +57,6 @@ module.exports = async (req, res, next) => {
     });
 
   } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
+    catchError(err, next);
   }
 }

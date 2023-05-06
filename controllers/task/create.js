@@ -3,34 +3,22 @@ const _ = require("lodash");
 
 const prisma = new PrismaClient();
 const { validate } = require('../../validation/tasks');
+const checkRole = require('../shared/checkRole');
+const sharedEmp = require('../shared/employee');
+const catchError = require('../shared/catchError');
+const validateTask = require('../shared/dataValidation.js');
+
 
 module.exports = async (req, res, next) => {
-  const { error } = validate(req.body);
-  if (error) {
-    const err = new Error(error.details[0].message);
-    error.statusCode = 422;
-    return next(err);
-  }
-
-  if (req.empRole === 'developer') {
-    const error = new Error('Not Authorized');
-    error.statusCode = 401;
-    return next(error)
-  }
-
+  validateTask(validate, req.body, next);
+  
+  checkRole(req.empRole, next);
+  
   try {
     //* find emp to assign to task
-    const employee = await prisma.employee.findFirst({
-      where: {
-        id: Number(req.params.id)
-      }
-    });
+    const employee = await sharedEmp.findEmpById(req.params.id);
 
-    if (!employee) {
-      const error = new Error('Employee with this email could not be found.');
-      error.statusCode = 404;
-      throw error;
-    }
+    sharedEmp.employeeNotFound(employee);
 
     const date = req.body.deadLine;
     const data = {
@@ -49,10 +37,7 @@ module.exports = async (req, res, next) => {
     });
 
   } catch(error) {
-    if(!error.statusCode) {
-      error.statusCode = 500;
-    }
-    next(error)
+    catchError(error, next);
   } 
   
 }

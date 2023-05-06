@@ -1,6 +1,8 @@
 const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
+const catchError = require('../shared/catchError');
+
 
 module.exports = async (req, res, next) => {
   
@@ -23,9 +25,6 @@ module.exports = async (req, res, next) => {
     });
 
   } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
+    catchError(err, next);
   }
 }

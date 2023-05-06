@@ -1,34 +1,23 @@
-const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const prisma = new PrismaClient();
 const { validateLoginEmp } = require('../../validation/employee');
+const sharedEmp = require('../shared/employee');
+const catchError = require('../shared/catchError');
+const validate = require('../shared/dataValidation.js');
 
 module.exports = async(req, res, next) => {
-  const { error } = validateLoginEmp(req.body);
-  if (error) {
-    const err = new Error(error.details[0].message);
-    error.statusCode = 422;
-    return next(err);
-  }
+
+  validate(validateLoginEmp, req.body, next);
 
   const email = req.body.email;
   const password = req.body.password;
   
   try {
 
-    const employee = await prisma.employee.findUnique({
-      where: {
-        email: email
-      }
-    });
+    const employee = await sharedEmp.findEmpByEmail(email);
 
-    if (!employee) {
-      const error = new Error('Employee with this email could not be found.');
-      error.statusCode = 404;
-      throw error;
-    }
+    sharedEmp.employeeNotFound(employee);
   
     const isEqual = await bcrypt.compare(password, employee.password);
     if (!isEqual) {
@@ -55,9 +44,6 @@ module.exports = async(req, res, next) => {
       }
     });
   } catch (err) {
-    if(!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+    catchError(err, next);
   }
 }

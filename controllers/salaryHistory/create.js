@@ -1,28 +1,20 @@
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
+const checkRole = require('../shared/checkRole');
+const sharedEmp = require('../shared/employee');
+const catchError = require('../shared/catchError');
+
 
 module.exports = async(req, res, next) => {
   
-  if (req.empRole === 'developer') {
-    const error = new Error('Not Authorized');
-    error.statusCode = 401;
-    return next(error)
-  }
+  checkRole(req.empRole, next);
 
   try {
 
-    const employee = await prisma.employee.findFirst({
-      where: {
-        id: Number(req.params.id)
-      }
-    });
+    const employee = await sharedEmp.findEmpById(req.params.id);
   
-    if (!employee) {
-      const error = new Error('Employee with this email could not be found.');
-      error.statusCode = 404;
-      throw error;
-    }
+    sharedEmp.employeeNotFound(employee);
 
     const salary = employee.salary; 
     if (salary === 0) {
@@ -60,9 +52,6 @@ module.exports = async(req, res, next) => {
     })
 
   } catch (error) {
-    if(!error.statusCode) {
-      error.statusCode = 500;
-    }
-    next(error);
+    catchError(error, next);
   }
 }

@@ -4,34 +4,21 @@ const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient()
 const { validateEmp } = require('../../validation/employee');
+const checkRole = require('../shared/checkRole');
+const sharedEmp = require('../shared/employee');
+const catchError = require('../shared/catchError');
+const validate = require('../shared/dataValidation.js');
 
 module.exports = async (req, res, next) => {
-  const { error } = validateEmp(req.body);
-  if (error) {
-    const err = new Error(error.details[0].message);
-    error.statusCode = 422;
-    return next(err);
-  }
 
-  if (req.empRole === 'developer') {
-    const error = new Error('Not Authorized');
-    error.statusCode = 401;
-    return next(error)
-  }
+  validate(validateEmp, req.body, next);
+  checkRole(req.empRole, next);
 
   try {
 
-    let employee = await prisma.employee.findUnique({
-      where: {
-        email: req.body.email,
-      },
-    })
+    let employee = await sharedEmp.findEmpByEmail(req.body.email);
 
-    if (employee) {
-      const error = new Error('Employee Already registered')
-      error.statusCode = 400;
-      throw error;
-    }
+    sharedEmp.employeeFound(employee);
   
     if (req.body.password !== req.body.confirm_password) {
       const error = new Error("password doesn't match");
@@ -72,9 +59,6 @@ module.exports = async (req, res, next) => {
     });
 
   } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
+    catchError(err, next);
   }
 }

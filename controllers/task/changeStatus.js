@@ -2,16 +2,12 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 const { validateStatus } = require('../../validation/tasks');
+const catchError = require('../shared/catchError');
+const validate = require('../shared/dataValidation.js');
 
 module.exports = async (req, res, next) => {
   
-  const { error } = validateStatus(req.body);
-  if (error) {
-    const err = new Error(error.details[0].message);
-    error.statusCode = 422;
-    return next(err);
-  }
-
+  validate(validateStatus, req.body, next);
   try {    
     const task = await prisma.task.findFirst({
       where: {
@@ -53,9 +49,6 @@ module.exports = async (req, res, next) => {
     });
 
   } catch (err) {
-    if (!err.status) {
-      err.status = 500;
-    }
-    next(err);
+   catchError(err, next);
   }
 }
