@@ -8,6 +8,12 @@ const validateEmployee = employee => {
     confirm_password: Joi.string().min(8).max(255).required(),
     role: Joi.string().valid('super_admin', 'hr', 'developer').required(),
     salary: Joi.number().positive().default(0).optional(),
+    profilePic: Joi.string().min(13),
+    birthDate: Joi.object({
+      day: Joi.number().positive().required(),
+      month: Joi.number().positive().required(),
+      year: Joi.number().positive().required()
+    }).required()
   });
   return schema.validate(employee); 
 }
