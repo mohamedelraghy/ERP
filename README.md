@@ -39,6 +39,9 @@ This will start the server at `http://localhost:3000`.
 
 ## API Documentation
 
+run: `npm run test:postman`
+
+### or
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/7215796-eca5bd8d-800d-4b98-9af3-e636020c4d19?action=collection%2Ffork&collection-url=entityId%3D7215796-eca5bd8d-800d-4b98-9af3-e636020c4d19%26entityType%3Dcollection%26workspaceId%3D81008f9e-6ad1-4807-bbc2-cfaa66b78dd4)
 
