@@ -12,21 +12,36 @@ datasource db {
 
 
 model Employee {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  email     String   @unique
-  password  String
-  role      String   @db.VarChar(255)
-  salary    Int
-  tasks     Task[]
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(255)
+  email         String    @unique
+  password      String
+  role          String    @db.VarChar(255)
+  salary        Int?      @default(0)
+  tasks         Task[]
+  salaryHistory SalaryHistory[]
+  join          DateTime? @default(now())
+  birthDate     DateTime?
+  profilePic    String?   @default("https://profile-pic.me") @db.VarChar(255)
 }
 
 model Task {
+  id          Int       @id @default(autoincrement())
+  employee    Employee  @relation(fields: [employeeId], references: [id])
+  employeeId  Int
+  title       String    @db.VarChar(255)
+  description String    @db.VarChar(255)
+  status      String    @db.VarChar(255)
+  salary      Int       @default(0)
+  deadLine    DateTime?
+  finishedAt  DateTime?
+}
+
+model SalaryHistory {
   id          Int      @id @default(autoincrement())
   employee    Employee @relation(fields: [employeeId], references: [id])
   employeeId  Int
-  title       String   @db.VarChar(255)
-  description String   @db.VarChar(255)
-  status      String   @db.VarChar(255)
-  salary      Int  
+  month       Int?
+  year        Int?
+  salaryTaken Int?     @default(0)
 }
