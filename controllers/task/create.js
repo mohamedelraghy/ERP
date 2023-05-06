@@ -32,9 +32,11 @@ module.exports = async (req, res, next) => {
       throw error;
     }
 
+    const date = req.body.deadLine;
     const data = {
       ..._.pick(req.body, [ 'title', 'description', 'status', 'salary']),
-      employeeId: employee.id
+      employeeId: employee.id,
+      deadLine: new Date(date.year, date.month - 1, date.day)
     }
     const task = await prisma.task.create({
       data: data
