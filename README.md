@@ -30,6 +30,11 @@ salary.
 
   `make sure mysql server is up and running at port 3306`
 
+## Set Environment Variables
+`DATABASE_URL=YOUR_DB_CONNECTION_STRING`
+
+ `JWT_KEY=YOU_JWT-SECRET`
+
 ## Running the API
 
 To start the API, run the following command:
